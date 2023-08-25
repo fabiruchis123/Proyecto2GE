@@ -62,7 +62,7 @@ private String identificacion;
         return salario;
     }
 
-    public Empleado(String identificacion, String nombre, String telefono, String puesto, int salario, Role role) {
+    public Empleado(String identificacion, String telefono1, String puesto1) {
         this.identificacion = identificacion;
         this.nombre = nombre;
         this.telefono = telefono;
