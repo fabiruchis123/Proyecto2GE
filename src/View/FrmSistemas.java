@@ -4,6 +4,7 @@ package View;
 import View.Clientes.FRMClientes;
 import View.Habitacion.FRMHabitacion;
 import View.Reserva.FRMReserva;
+import javax.swing.JDesktopPane;
 
 
 public class FrmSistemas extends javax.swing.JFrame {
@@ -143,6 +144,10 @@ public class FrmSistemas extends javax.swing.JFrame {
          View.showInternal(Desk, frm);
     }//GEN-LAST:event_BtnReservasActionPerformed
 
+    
+    public JDesktopPane getDesktop(){
+        return this.Desk;
+    }
     /**
      * @param args the command line arguments
      */

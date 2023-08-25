@@ -6,7 +6,10 @@ package View.Habitacion;
 
 import Controller.Controller;
 import Controller.Habitaciones.HabitacionesController;
+import Model.Cliente.Cliente;
 import Model.Habitaciones.Habitaciones;
+import Model.Habitaciones.Role;
+import View.FrmSistemas;
 import View.View;
 
 /**
@@ -16,6 +19,7 @@ import View.View;
 public class FRMHabitacion extends javax.swing.JInternalFrame implements View<Habitaciones> {
 
     static Controller controler;
+    FrmSistemas rm;
     /**
      * Creates new form FRMhotel
      */
@@ -35,17 +39,17 @@ public class FRMHabitacion extends javax.swing.JInternalFrame implements View<Ha
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtNumHab = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         cboxTipo = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cboxTipo1 = new javax.swing.JComboBox<>();
         txtPrecio = new javax.swing.JFormattedTextField();
+        txtNumHab = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnInsert = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 204, 204));
@@ -58,14 +62,6 @@ public class FRMHabitacion extends javax.swing.JInternalFrame implements View<Ha
 
         jLabel1.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         jLabel1.setText("Tipo");
-
-        txtNumHab.setBackground(new java.awt.Color(255, 204, 204));
-        txtNumHab.setText(" ");
-        txtNumHab.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumHabActionPerformed(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         jLabel2.setText("N° Habitacion");
@@ -110,34 +106,43 @@ public class FRMHabitacion extends javax.swing.JInternalFrame implements View<Ha
             }
         });
 
+        txtNumHab.setBackground(new java.awt.Color(255, 204, 204));
+        txtNumHab.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        txtNumHab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumHabActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(64, 64, 64)
-                        .addComponent(jLabel1))
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel1)
+                        .addGap(57, 57, 57)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(cboxTipo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(35, 35, 35))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(17, 17, 17))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(txtNumHab, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(cboxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(cboxTipo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(35, 35, 35))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17))))
+                        .addGap(15, 15, 15)
+                        .addComponent(txtNumHab, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cboxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,28 +154,46 @@ public class FRMHabitacion extends javax.swing.JInternalFrame implements View<Ha
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNumHab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboxTipo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cboxTipo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtNumHab)
+                        .addGap(2, 2, 2)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 204, 204), 3));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Icons/icons8-insert-key-48.png"))); // NOI18N
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Icons/icons8-update-file-48.png"))); // NOI18N
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Icons/icons8-delete-48.png"))); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnInsert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Icons/icons8-insert-key-48.png"))); // NOI18N
+        btnInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnInsertActionPerformed(evt);
+            }
+        });
+
+        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Icons/icons8-update-file-48.png"))); // NOI18N
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Icons/icons8-delete-48.png"))); // NOI18N
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
             }
         });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Icons/icons8-search-48.png"))); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -178,11 +201,11 @@ public class FRMHabitacion extends javax.swing.JInternalFrame implements View<Ha
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(60, Short.MAX_VALUE))
@@ -192,9 +215,9 @@ public class FRMHabitacion extends javax.swing.JInternalFrame implements View<Ha
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37))
         );
@@ -211,7 +234,7 @@ public class FRMHabitacion extends javax.swing.JInternalFrame implements View<Ha
                     .addGroup(layout.createSequentialGroup()
                         .addGap(88, 88, 88)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,10 +248,6 @@ public class FRMHabitacion extends javax.swing.JInternalFrame implements View<Ha
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtNumHabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumHabActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumHabActionPerformed
 
     private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
         // TODO add your handling code here:
@@ -263,17 +282,56 @@ public class FRMHabitacion extends javax.swing.JInternalFrame implements View<Ha
         
     }//GEN-LAST:event_cboxTipoMouseClicked
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        int id = Integer.parseInt(this.txtNumHab.getText());
+        
+        if (id != 0){
+            this.controler.delete(new Habitaciones(id));
+            this.clear();
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
+        // TODO add your handling code here:
+        int numero = Integer.parseInt(this.txtNumHab.getText());
+        Role tipo = (Role)cboxTipo.getSelectedItem() ;
+        boolean ocupado;
+        ocupado = cboxTipo1.getSelectedIndex() != 0;
+        double precio = Double.parseDouble(txtPrecio.getText());
+        
+        this.controler.insert(new Habitaciones(numero, tipo, ocupado, precio));
+                
+    }//GEN-LAST:event_btnInsertActionPerformed
+
+    private void txtNumHabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumHabActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumHabActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        
+        Role tipo = (Role)cboxTipo.getSelectedItem() ;
+        
+        this.controler.update(new Habitaciones(tipo));
+        
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+        FrmTbHabitacion frm = new FrmTbHabitacion ();
+        
+        View.showInternal(rm.getDesktop(), frm);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnInsert;
     private javax.swing.JComboBox<String> cboxTipo;
     private javax.swing.JComboBox<String> cboxTipo1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -281,7 +339,7 @@ public class FRMHabitacion extends javax.swing.JInternalFrame implements View<Ha
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtNumHab;
+    private javax.swing.JFormattedTextField txtNumHab;
     private javax.swing.JFormattedTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 

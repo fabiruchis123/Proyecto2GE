@@ -70,6 +70,13 @@ public class Habitaciones implements Entity {
         this.precio = 45000;
         
     }
+
+    public Habitaciones(Role tipohabitacion) {
+        this.idHabitacion = 0;
+        this.tipohabitacion = tipohabitacion;
+        this.estado = false;
+        this.precio = 0;
+    }
     
 
     @Override
