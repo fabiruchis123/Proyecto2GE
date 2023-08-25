@@ -5,6 +5,7 @@
 package Model.Habitaciones;
 
 import Model.Entity;
+import static Model.Habitaciones.Role.INDIVIDUAL;
 
 /**
  *
@@ -32,7 +33,7 @@ public class Habitaciones implements Entity {
         this.tipohabitacion = tipohabitacion;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
@@ -62,6 +63,15 @@ public class Habitaciones implements Entity {
         this.precio = preciosuge();
     }
 
+    public Habitaciones(int idHabitacion) {
+        this.idHabitacion = idHabitacion;
+        this.tipohabitacion = INDIVIDUAL;
+        this.estado = false;
+        this.precio = 45000;
+        
+    }
+    
+
     @Override
     public String toString() {
         return "Habitaciones{" + "idHabitacion=" + idHabitacion + ", tipohabitacion=" + tipohabitacion + ", estado=" + estado + ", precio=" + precio + '}';
@@ -88,5 +98,7 @@ public class Habitaciones implements Entity {
     public Object[] toArrayObject() {
         return new Object[]{this.idHabitacion,this.tipohabitacion,this.estado,this.precio,this.toString()};
     }
+
+   
      
 }

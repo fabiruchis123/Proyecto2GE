@@ -355,7 +355,7 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
         String correo = this.txtCorreo.getText();
         String nombre = this.txtNombre.getText();
         
-        this.controler.insert(new Cliente(nombre,telefono,correo));
+        this.controler.update(new Cliente(nombre,telefono,correo));
     }//GEN-LAST:event_btnActualizaActionPerformed
 
     private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
