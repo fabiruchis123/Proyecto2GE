@@ -7,8 +7,19 @@ package View.Clientes;
 import Controller.Cliente.ClienteController;
 import Controller.Controller;
 import Model.Cliente.Cliente;
+import View.Table;
 import View.View;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -35,7 +46,7 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtIdentificacion = new javax.swing.JFormattedTextField();
+        txtIdentificacion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -46,7 +57,7 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
         jLabel5 = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtEdad = new javax.swing.JTextField();
+        LblEdad = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -55,7 +66,7 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblClientes = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        txtFiltro = new javax.swing.JTextField();
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 204, 204), 1, true));
         jPanel1.setToolTipText("");
@@ -63,7 +74,11 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
         jLabel1.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         jLabel1.setText("Identificacion:");
 
-        txtIdentificacion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        txtIdentificacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdentificacionActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Serif", 0, 14)); // NOI18N
         jLabel2.setText("FechaNacimiento");
@@ -77,7 +92,17 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
         jLabel3.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         jLabel3.setText("Nombre:");
 
-        txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
+        txtFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFechaActionPerformed(evt);
+            }
+        });
+        txtFecha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFechaKeyReleased(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
         jLabel4.setText("(dia/mes/año)");
@@ -103,12 +128,7 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
         jLabel7.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         jLabel7.setText("Edad:");
 
-        txtEdad.setEnabled(false);
-        txtEdad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEdadActionPerformed(evt);
-            }
-        });
+        LblEdad.setText(" ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -126,11 +146,7 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4))
+                        .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -140,9 +156,14 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
                         .addGap(18, 18, 18)
                         .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel7)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4))
+                    .addComponent(LblEdad))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -151,12 +172,12 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -164,15 +185,25 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
                     .addComponent(jLabel5)
                     .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(LblEdad))
                 .addGap(17, 17, 17))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 204, 204)));
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Icons/icons8-insert-key-48.png"))); // NOI18N
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Icons/icons8-delete-48.png"))); // NOI18N
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnActualiza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Icons/icons8-update-file-48.png"))); // NOI18N
         btnActualiza.addActionListener(new java.awt.event.ActionListener() {
@@ -254,18 +285,24 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
         });
         jScrollPane1.setViewportView(tblClientes);
 
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField1)
+            .addComponent(txtFiltro)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 847, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE))
         );
@@ -300,10 +337,6 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEdadActionPerformed
-
     private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCorreoActionPerformed
@@ -322,7 +355,7 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
         String correo = this.txtCorreo.getText();
         String nombre = this.txtNombre.getText();
         
-        this.controler.update(evt);
+        this.controler.insert(new Cliente(nombre,telefono,correo));
     }//GEN-LAST:event_btnActualizaActionPerformed
 
     private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
@@ -344,11 +377,57 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
     }//GEN-LAST:event_tblClientesKeyReleased
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+    String id =JOptionPane.showInputDialog(this, "Ingrese la Identificacion");
+        if (!id.isEmpty()){
+            this.controler.read(id);
+        }
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
+        // TODO add your handling code here:
+                Table.filter(tblClientes, this.txtFiltro.getText());
+
+    }//GEN-LAST:event_txtFiltroKeyReleased
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        String id = this.txtIdentificacion.getText();
+        
+        if (!id.isEmpty()){
+            this.controler.delete(new Cliente(id));
+            this.clear();
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtIdentificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdentificacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdentificacionActionPerformed
+
+    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaActionPerformed
+
+    private void txtFechaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaKeyReleased
+        // TODO add your handling code here:
+        
+        calcularEdadYActualizarLabel();
+    }//GEN-LAST:event_txtFechaKeyReleased
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        
+        String Identi= this.txtIdentificacion.getText();
+        String Nom=this.txtNombre.getText();
+        String corr=this.txtNombre.getText();
+        String tel = this.txtTelefono.getText();
+        String Fecha = this.txtFecha.getText();
+        
+        this.controler.insert(new Cliente(Identi, Nom, Fecha, tel, corr));
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel LblEdad;
     private javax.swing.JButton btnActualiza;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
@@ -364,12 +443,11 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtEdad;
     private javax.swing.JFormattedTextField txtFecha;
-    private javax.swing.JFormattedTextField txtIdentificacion;
+    private javax.swing.JTextField txtFiltro;
+    private javax.swing.JTextField txtIdentificacion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
@@ -386,28 +464,60 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
 
     @Override
     public void display(Cliente clie) {
-        this.txtIdentificacion.setText(clie.getIdentificacion());
-        this.txtNombre.setText(clie.getNombre);   
         
+        this.txtIdentificacion.setText(clie.getIdentificacion());
+        this.txtNombre.setText(clie.getNombre());
+        this.txtTelefono.setText(clie.getTelefono());
+        this.txtCorreo.setText(clie.getTelefono());
+        this.txtFecha.setText(clie.getFechaNacimiento());
+    
     }
 
     @Override
     public void displayAll(Cliente[] regs) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+     DefaultTableModel tableModel=(DefaultTableModel) tblClientes.getModel();
+       tableModel.setNumRows(0);
+        for(Cliente cliente:regs){
+            Object[] data=cliente.toArrayObject();
+            tableModel.addRow(data);
+        }
+        this.tblClientes.setModel(tableModel);
     }
 
     @Override
     public void displayMessage(String msj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        JOptionPane.showMessageDialog(this, msj,"Informacion Importante", JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     @Override
     public boolean displayConfirmMessage(String msj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return JOptionPane.showConfirmDialog(this, msj,"Confirrmacion", JOptionPane.QUESTION_MESSAGE,JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION;
     }
 
     @Override
     public void displayErrorMessage(String msj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        JOptionPane.showMessageDialog(this, msj,"Error", JOptionPane.ERROR_MESSAGE);
     }
+    
+private void calcularEdadYActualizarLabel() {
+        String fechaStr = txtFecha.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        try {
+            LocalDate fechaNacimiento = LocalDate.parse(fechaStr, formatter);
+            LocalDate fechaActual = LocalDate.now();
+
+            int edad = calcularEdad(fechaNacimiento, fechaActual);
+            LblEdad.setText(edad + " años");
+        } catch (Exception ex) {
+            LblEdad.setText("Error al analizar la fecha.");
+        }
+    }
+
+
+    private int calcularEdad(LocalDate fechaNacimiento, LocalDate fechaActual) {
+        return Period.between(fechaNacimiento, fechaActual).getYears();
+    }
+
 }

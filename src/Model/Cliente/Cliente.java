@@ -62,13 +62,20 @@ private String correo;
         this.correo = correo;
     }
 
+    public Cliente(String nombre, String telefono, String correo) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.fechaNacimiento = "";
+        this.identificacion = "";
+    }
+
     public Cliente(String identificacion) {
         this.identificacion = identificacion;
         this.nombre = "";
         this.fechaNacimiento= "";
         this.telefono = "";
-        this.correo = "";
-                
+        this.correo = "";    
     }
     
 
