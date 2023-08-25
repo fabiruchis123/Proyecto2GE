@@ -2,6 +2,7 @@
 package View;
 
 import View.Clientes.FRMClientes;
+import View.Empleados.FRMEmpleados;
 import View.Habitacion.FRMHabitacion;
 import View.Reserva.FRMReserva;
 import javax.swing.JDesktopPane;
@@ -27,7 +28,7 @@ public class FrmSistemas extends javax.swing.JFrame {
         Desk = new javax.swing.JDesktopPane();
         BtnClientes = new javax.swing.JButton();
         BtnHabitaciones = new javax.swing.JButton();
-        BtnReservas = new javax.swing.JButton();
+        BtnEmpleados = new javax.swing.JButton();
         BtnServicios = new javax.swing.JButton();
 
         jMenuItem2.setText("jMenuItem2");
@@ -57,14 +58,14 @@ public class FrmSistemas extends javax.swing.JFrame {
             }
         });
 
-        BtnReservas.setBackground(new java.awt.Color(255, 204, 204));
-        BtnReservas.setFont(new java.awt.Font("Serif", 2, 12)); // NOI18N
-        BtnReservas.setForeground(new java.awt.Color(255, 51, 102));
-        BtnReservas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Icons/icons8-reserve-32 (1).png"))); // NOI18N
-        BtnReservas.setText("Reservas");
-        BtnReservas.addActionListener(new java.awt.event.ActionListener() {
+        BtnEmpleados.setBackground(new java.awt.Color(255, 204, 204));
+        BtnEmpleados.setFont(new java.awt.Font("Serif", 2, 12)); // NOI18N
+        BtnEmpleados.setForeground(new java.awt.Color(255, 51, 102));
+        BtnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Icons/icons8-reserve-32 (1).png"))); // NOI18N
+        BtnEmpleados.setText("Empleados");
+        BtnEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnReservasActionPerformed(evt);
+                BtnEmpleadosActionPerformed(evt);
             }
         });
 
@@ -81,7 +82,7 @@ public class FrmSistemas extends javax.swing.JFrame {
 
         Desk.setLayer(BtnClientes, javax.swing.JLayeredPane.DEFAULT_LAYER);
         Desk.setLayer(BtnHabitaciones, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        Desk.setLayer(BtnReservas, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        Desk.setLayer(BtnEmpleados, javax.swing.JLayeredPane.DEFAULT_LAYER);
         Desk.setLayer(BtnServicios, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout DeskLayout = new javax.swing.GroupLayout(Desk);
@@ -91,13 +92,13 @@ public class FrmSistemas extends javax.swing.JFrame {
             .addGroup(DeskLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(BtnClientes)
-                .addGap(80, 80, 80)
+                .addGap(59, 59, 59)
                 .addComponent(BtnHabitaciones)
-                .addGap(80, 80, 80)
-                .addComponent(BtnReservas)
-                .addGap(80, 80, 80)
+                .addGap(77, 77, 77)
+                .addComponent(BtnEmpleados)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                 .addComponent(BtnServicios)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
         DeskLayout.setVerticalGroup(
             DeskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,7 +107,7 @@ public class FrmSistemas extends javax.swing.JFrame {
                 .addGroup(DeskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnClientes)
                     .addComponent(BtnHabitaciones)
-                    .addComponent(BtnReservas)
+                    .addComponent(BtnEmpleados)
                     .addComponent(BtnServicios))
                 .addContainerGap(418, Short.MAX_VALUE))
         );
@@ -139,10 +140,10 @@ public class FrmSistemas extends javax.swing.JFrame {
         View.showInternal(Desk, frm);
     }//GEN-LAST:event_BtnHabitacionesActionPerformed
 
-    private void BtnReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnReservasActionPerformed
-         FRMReserva frm = new FRMReserva ();
+    private void BtnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEmpleadosActionPerformed
+         FRMEmpleados frm = new FRMEmpleados ();
          View.showInternal(Desk, frm);
-    }//GEN-LAST:event_BtnReservasActionPerformed
+    }//GEN-LAST:event_BtnEmpleadosActionPerformed
 
     
     public JDesktopPane getDesktop(){
@@ -186,8 +187,8 @@ public class FrmSistemas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnClientes;
+    private javax.swing.JButton BtnEmpleados;
     private javax.swing.JButton BtnHabitaciones;
-    private javax.swing.JButton BtnReservas;
     private javax.swing.JButton BtnServicios;
     private javax.swing.JDesktopPane Desk;
     private javax.swing.JMenuItem jMenuItem2;
