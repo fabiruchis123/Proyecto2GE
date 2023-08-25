@@ -68,6 +68,9 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
         tblClientes = new javax.swing.JTable();
         txtFiltro = new javax.swing.JTextField();
 
+        setClosable(true);
+        setIconifiable(true);
+
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 204, 204), 1, true));
         jPanel1.setToolTipText("");
 
