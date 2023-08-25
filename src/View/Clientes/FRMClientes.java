@@ -39,7 +39,7 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        txtFecha = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
@@ -77,7 +77,7 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
         jLabel3.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         jLabel3.setText("Nombre:");
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
         jLabel4.setFont(new java.awt.Font("Serif", 0, 12)); // NOI18N
         jLabel4.setText("(dia/mes/año)");
@@ -128,7 +128,7 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -154,7 +154,7 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
                     .addComponent(txtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
@@ -320,8 +320,9 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
         // TODO add your handling code here:
         String telefono = this.txtTelefono.getText();
         String correo = this.txtCorreo.getText();
-        String nombre = this.txtNombre
+        String nombre = this.txtNombre.getText();
         
+        this.controler.update(evt);
     }//GEN-LAST:event_btnActualizaActionPerformed
 
     private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
@@ -352,7 +353,6 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -368,6 +368,7 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
     private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtEdad;
+    private javax.swing.JFormattedTextField txtFecha;
     private javax.swing.JFormattedTextField txtIdentificacion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
@@ -375,12 +376,19 @@ public class FRMClientes extends javax.swing.JInternalFrame implements View<Clie
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.txtCorreo.setText("");
+        this.txtNombre.setText("");
+        this.txtIdentificacion.setText("");
+        this.txtTelefono.setText("");
+        this.txtFecha.setText("");
+
     }
 
     @Override
-    public void display(Cliente regs) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void display(Cliente clie) {
+        this.txtIdentificacion.setText(clie.getIdentificacion());
+        this.txtNombre.setText(clie.getNombre);   
+        
     }
 
     @Override
