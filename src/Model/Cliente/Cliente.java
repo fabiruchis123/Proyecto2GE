@@ -62,6 +62,16 @@ private String correo;
         this.correo = correo;
     }
 
+    public Cliente(String identificacion) {
+        this.identificacion = identificacion;
+        this.nombre = "";
+        this.fechaNacimiento= "";
+        this.telefono = "";
+        this.correo = "";
+                
+    }
+    
+
     @Override
     public String toString() {
         return "Cliente{" + "identificacion=" + identificacion + ", nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + ", telefono=" + telefono + ", correo=" + correo + '}';
