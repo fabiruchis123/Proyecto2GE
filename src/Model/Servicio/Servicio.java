@@ -4,11 +4,13 @@
  */
 package Model.Servicio;
 
+import Model.Entity;
+
 /**
  *
  * @author UTN
  */
-public class Servicio {
+public class Servicio implements Entity{
     
     private static int codigoauto = 1;
     private int codigo;
@@ -66,6 +68,16 @@ public class Servicio {
     @Override
     public String toString() {
         return "Servicio{" + "codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio + '}';
+    }
+
+    @Override
+    public boolean isComplete() {
+        return this.getCodigo() != 0 && !this.nombre.equals("") && !this.descripcion.equals("") && this.precio != 0.0;
+    }
+
+    @Override
+    public Object[] toArrayObject() {
+        return new Object[]{this.codigo,this.nombre,this.descripcion,this.precio,this.toString()};
     }
     
 }

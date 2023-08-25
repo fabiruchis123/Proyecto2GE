@@ -4,11 +4,13 @@
  */
 package Model.Habitaciones;
 
+import Model.Entity;
+
 /**
  *
  * @author UTN
  */
-public class Habitaciones {
+public class Habitaciones implements Entity {
     private int idHabitacion;
     private Role tipohabitacion;
     private boolean estado;
@@ -52,17 +54,39 @@ public class Habitaciones {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
-
+    
     public Habitaciones(int idHabitacion, Role tipohabitacion, boolean estado, double precio) {
         this.idHabitacion = idHabitacion;
         this.tipohabitacion = tipohabitacion;
         this.estado = estado;
-        this.precio = precio;
+        this.precio = preciosuge();
     }
 
     @Override
     public String toString() {
         return "Habitaciones{" + "idHabitacion=" + idHabitacion + ", tipohabitacion=" + tipohabitacion + ", estado=" + estado + ", precio=" + precio + '}';
     }
-    
+     private double preciosuge() {
+        switch (tipohabitacion) {
+            case INDIVIDUAL:
+                return 45000;
+            case DOBLE:
+                return 80000;
+            case SUITE:
+                return 140000;
+            default:
+                return 0;
+        }
+    }
+
+    @Override
+    public boolean isComplete() {
+      return this.getIdHabitacion() != 0 && this.tipohabitacion != Role.DOBLE.INDIVIDUAL.SUITE && this.estado && this.precio != 0.0;
+    }
+
+    @Override
+    public Object[] toArrayObject() {
+        return new Object[]{this.idHabitacion,this.tipohabitacion,this.estado,this.precio,this.toString()};
+    }
+     
 }

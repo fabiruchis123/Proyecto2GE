@@ -11,5 +11,9 @@ package Model.Habitaciones;
 public enum Role {
     INDIVIDUAL,
     DOBLE,
-    SUITE
+    SUITE;
+
+    public long getPrecioPorNoche() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
